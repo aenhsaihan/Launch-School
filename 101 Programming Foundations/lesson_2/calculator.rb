@@ -1,7 +1,14 @@
 require 'yaml'
-configuration = YAML::load_file "configuration.yml"
+MESSAGES = YAML.load_file("configuration.yml")
 
-def prompt(message)
+LANGUAGE = 'en'
+
+def messages(key, lang='en')
+	MESSAGES[lang][key]
+end
+
+def prompt(key)
+	message = messages(key, LANGUAGE)
 	Kernel.puts("=> #{message}")	
 end
 
@@ -36,44 +43,44 @@ def operation_to_message(op)
 	verb
 end
 
-prompt(configuration["greeting"])
+prompt("greeting")
 
 name = ''
 loop do
 	name = Kernel.gets.chomp
 	
 	if name.empty?
-		prompt(configuration["name_error"])
+		prompt("name_error")
 	else
 		break
 	end
 end
 
-prompt("Hi #{name}")
+prompt("hello")
 
 loop do #main loop
 	
 	number1 = ''
 	loop do
-		prompt(configuration["first_number"])
+		prompt("first_number")
 		number1 = Kernel.gets().chomp
 		
 		if valid_number?(number1)
 			break
 		else
-			prompt(configuration["number_error"])
+			prompt("number_error")
 		end
 	end
 	
 	number2 = ''
 	loop do
-		prompt(configuration["second_number"])
+		prompt("second_number")
 		number2 = Kernel.gets().chomp
 		
 		if valid_number?(number2)
 			break
 		else
-			prompt(configuration["number_error"])
+			prompt("number_error")
 		end
 	end
 	
@@ -85,7 +92,7 @@ loop do #main loop
 		4) divide
 	MSG
 		
-	prompt(operator_prompt)
+	puts "=> #{operator_prompt}"
 	
 	operator = ''
 	loop do
@@ -94,11 +101,11 @@ loop do #main loop
 		if %w(1 2 3 4).include?(operator)
 			break
 		else
-			prompt(configuration["operator_error"])
+			prompt("operator_error")
 		end
 	end
 
-	prompt("#{operation_to_message(operator)} the two numbers...")
+	puts "=> #{operation_to_message(operator)} the two numbers..."
 	
 	result = case operator
 						when '1'
@@ -111,12 +118,12 @@ loop do #main loop
 					 		number1.to_f / number2.to_f
 	end
 	
-	prompt("The result is #{result}")
+	puts "The result is #{result}"
 	
-	prompt(configuration["subsequent_request"])
+	prompt("subsequent_request")
 	answer = Kernel.gets().chomp
 	
 	break unless answer.downcase().start_with?('y')
 end
 
-prompt(configuration["parting_words"])
+prompt("parting_words")
