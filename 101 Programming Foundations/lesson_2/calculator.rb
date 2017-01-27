@@ -54,9 +54,7 @@ loop do #main loop
 		3) multiply
 		4) divide
 	MSG
-	
-	# prompt("What operation would you like to perform on these two numbers?\n 1) add\n 2) subtract\n 3) multiply\n 4) divide")
-	
+		
 	prompt(operator_prompt)
 	
 	operator = ''
