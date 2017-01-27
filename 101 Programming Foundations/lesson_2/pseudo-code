@@ -1,0 +1,80 @@
+1. a method that returns the sum of two integers
+
+***casual***
+ask the user for two numbers
+save each number to a separate variable
+perform an addition operation on the two numbers, and save the result to a variable
+output the result variable to the screen
+
+***formal***
+START
+
+SET number1 = GET first number from user
+SET number2 = GET second number from user
+
+SET result = number1 + number2
+
+PRINT result
+
+END
+
+2. a method that takes an array of strings, and returns a string that is all those strings concatenated together
+
+***casual***
+given an array of strings
+set aside a variable as an empty string for the final result
+iterate through each string in the array
+beginning with the first one, shovel each string into the final result variable
+once iteration is finished, output the result variable onto the screen
+
+***formal***
+START
+
+# given an array of strings
+
+SET final_string = empty string
+
+SET iterator = 1
+
+WHILE iterator < length of the array of strings
+	SET final_string = shovel value within the array at space "iterator"
+
+	iterator = iterator + 1
+
+PRINT final_string
+
+END
+
+3. a method that takes an array of integers, and returns a new array with every other element
+
+***casual***
+given an array of integers
+set aside an empty array for the result
+iterate over each integer in the array
+for integers at an odd position, skip to the next iteration
+otherwise, add the integer into the empty result array
+
+***formal***
+START
+
+# given an array of integers
+
+SET result_array = initialize an empty array
+
+SET iterator = 1
+
+WHILE iterator < length of the array of integers
+	IF position of integer in the ithe array is even
+		SET result_array = add integer as an element
+	ELSE
+		skip to the next iteration
+
+PRINT result_array
+
+END
+
+
+
+
+
+
