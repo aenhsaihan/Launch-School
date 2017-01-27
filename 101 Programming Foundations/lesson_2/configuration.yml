@@ -1,0 +1,8 @@
+greeting: "Welcome to the Calculator! Enter your name:"
+name_error: "Make sure to use a valid name"
+number_error: "Hmm, that doesn't appear to be a valid number"
+first_number: "What's the first number?"
+second_number: "What's the second number?"
+operator_error: "Must choose 1, 2, 3 or 4"
+subsequent_request: "Do you want to perform another calculation? (Y to calculate again)"
+parting_words: "Thank you for using the calculator!"
