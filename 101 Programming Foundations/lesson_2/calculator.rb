@@ -2,14 +2,20 @@ def prompt(message)
 	Kernel.puts("=> #{message}")	
 end
 
-def valid_number?(num)
-	begin
-		Integer(num)
-	rescue
-		return false
-	end
+def float?(num)
+	Float(num) rescue false
+end
 
-	true
+def integer?(num)
+	Integer(num) rescue false
+end
+
+def number?(num)
+	integer?(num) || float?(num)
+end
+
+def valid_number?(num)
+	number?(num)
 end
 
 def operation_to_message(op)
