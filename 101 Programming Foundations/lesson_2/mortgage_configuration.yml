@@ -1,0 +1,6 @@
+loan_amount: "Please provide the loan amount"
+apr: "Please provide the Annual Percentage Rate(APR)"
+loan_duration: "Please provide the loan duration (months)"
+number_error: "Hmm, that doesn't appear to be a valid number"
+parting_words: "Thank you for using the mortgage loan calculator!"
+subsequent_request: "Do you want to perform another calculation? (Y to calculate again)"
