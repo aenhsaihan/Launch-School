@@ -37,7 +37,7 @@ def calculate_monthly_payment(loan_amount, apr, loan_duration_months)
 end
 
 loop do
-  
+
   loan_amount = ''
   loop do
     prompt("loan_amount")
@@ -79,7 +79,7 @@ loop do
 
   prompt("subsequent_request")
   answer = gets.chomp
-  
+
   break unless answer.downcase().start_with?('y')
 
 end
