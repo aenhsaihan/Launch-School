@@ -31,15 +31,15 @@ def calculate_monthly_payment(loan_amount, apr, loan_duration_months)
   n = loan_duration_months.to_i
   j = calculate_monthly_interest_rate(apr)
 
-  m = p * (j / (1 - (1 + j)**(-n)))
+  m = p * (j / (1 - (1 + j)**-n))
 
   '%.2f' % m
 end
 
-loop do # main loop
+loop do
   
   loan_amount = ''
-  loop do 
+  loop do
     prompt("loan_amount")
     loan_amount = gets.chomp
 
@@ -51,7 +51,7 @@ loop do # main loop
   end
 
   apr = ''
-  loop do 
+  loop do
     prompt("apr")
     apr = (gets.chomp.to_f / 100)
 
@@ -63,7 +63,7 @@ loop do # main loop
   end
 
   loan_duration_months = ''
-  loop do 
+  loop do
     prompt("loan_duration")
     loan_duration_months = gets.chomp
 
