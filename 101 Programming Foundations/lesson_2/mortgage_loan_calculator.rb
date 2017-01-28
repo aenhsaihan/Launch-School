@@ -33,11 +33,10 @@ def calculate_monthly_payment(loan_amount, apr, loan_duration_months)
 
   m = p * (j / (1 - (1 + j)**-n))
 
-  '%.2f' % m
+  format('%.2f', m)
 end
 
 loop do
-
   loan_amount = ''
   loop do
     prompt("loan_amount")
