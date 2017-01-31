@@ -17,16 +17,6 @@ def valid_choice?(choice)
 	end
 end
 
-player_one = 0
-player_two = 0
-def keep_tally(player_one, player_two)
-	if win?(player_one, player_two)
-		player_one += 1
-	else
-		player_two += 1
-	end
-end
-
 def win?(player_one, player_two)
 	(player_one == 'scissors' && player_two == 'paper') ||
 	(player_one == 'paper' && player_two == 'rock') ||
@@ -50,6 +40,16 @@ def display_results(player, computer)
 	end
 end
 
+def keep_tally(player, computer, score = {})
+	if win?(player, computer)
+		score[:player] += 1
+	elsif win?(computer, player)
+		score[:computer] += 1
+	end
+
+	score
+end
+
 def rewrite_choice(user_choice)
 	if user_choice.length > 1
 		user_choice
@@ -58,6 +58,7 @@ def rewrite_choice(user_choice)
   end
 end
 
+score = {player: 0, computer: 0}
 loop do
 	choice = ''
 	loop do
@@ -80,10 +81,17 @@ loop do
 
 	puts "You chose: #{choice}; Computer chose: #{computer_choice}"
 
-	display_results choice, computer_choice
-	keep_tally(choice)
 
-	prompt "Do you want to play again?"
+	display_results choice, computer_choice
+	score = keep_tally choice, computer_choice, score
+
+	if score[:player] == 5 || score[:computer] == 5
+		prompt "Do you want to play again? you: #{score[:player]} computer: #{score[:computer]}"
+		score = {player: 0, computer: 0}
+	else
+		next
+	end
+
 	answer = gets.chomp
 	break unless answer.downcase.start_with?('y')
 end
