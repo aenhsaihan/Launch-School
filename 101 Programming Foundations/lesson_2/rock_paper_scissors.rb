@@ -17,6 +17,16 @@ def valid_choice?(choice)
 	end
 end
 
+player_one = 0
+player_two = 0
+def keep_tally(player_one, player_two)
+	if win?(player_one, player_two)
+		player_one += 1
+	else
+		player_two += 1
+	end
+end
+
 def win?(player_one, player_two)
 	(player_one == 'scissors' && player_two == 'paper') ||
 	(player_one == 'paper' && player_two == 'rock') ||
@@ -66,10 +76,12 @@ loop do
 	end
 
 	computer_choice = VALID_CHOICES.sample
+	choice = rewrite_choice(choice)
 
-	puts "You chose: #{rewrite_choice(choice)}; Computer chose: #{computer_choice}"
+	puts "You chose: #{choice}; Computer chose: #{computer_choice}"
 
-	display_results rewrite_choice(choice), computer_choice
+	display_results choice, computer_choice
+	keep_tally(choice)
 
 	prompt "Do you want to play again?"
 	answer = gets.chomp
