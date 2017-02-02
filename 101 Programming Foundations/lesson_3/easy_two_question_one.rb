@@ -27,3 +27,11 @@ ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 402, "Eddie" => 10 }
 # => Use a built-in hash method to discover whether Spot is a key or not
 
 puts ages.fetch('Spot') { |el| "#{el} is not present in the hash"}
+
+ages.key?("Spot")
+
+ages.has_key?("Spot")
+
+ages.include?("Spot")
+
+ages.member?("Spot")
