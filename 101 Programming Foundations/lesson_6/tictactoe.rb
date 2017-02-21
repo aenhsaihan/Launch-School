@@ -65,8 +65,21 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
-  brd[square] = COMPUTER_MARKER
+  on_defense = false
+  WINNING_LINES.each do |line|
+    marks_on_line = brd.values_at(*line)
+    if marks_on_line.count(INITIAL_MARKER) == 1 && marks_on_line.count(PLAYER_MARKER) == 2
+      open_index = brd.values_at(*line).index(INITIAL_MARKER)
+      brd[line[open_index]] = COMPUTER_MARKER
+      on_defense = true
+      break
+    end
+  end
+
+  if !on_defense
+    square = empty_squares(brd).sample
+    brd[square] = COMPUTER_MARKER
+  end
 end
 
 def board_full?(brd)
