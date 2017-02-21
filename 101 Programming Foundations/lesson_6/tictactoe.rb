@@ -42,15 +42,14 @@ def empty_squares(brd)
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
-def joinor(array, delimiter=', ', last_delimiter='or')
-  return array.first if array.size == 1
-
-  string = array.insert(-2, last_delimiter).join(delimiter)
-
-  if array.size == 3
-    string.gsub "#{delimiter}#{last_delimiter}#{delimiter}", " #{last_delimiter} "
+def joinor(array, delimiter=', ', word='or')
+  case array.size
+  when 0 then ''
+  when 1 then array.first
+  when 2 then array.join(" #{word} ")
   else
-    string.gsub "#{last_delimiter}#{delimiter}", "#{last_delimiter} "
+    array[-1] = "#{word} #{array.last}"
+    array.join(delimiter)
   end
 end
 
