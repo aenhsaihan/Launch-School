@@ -79,16 +79,6 @@ end
 
 def detect_winner(brd)
   WINNING_LINES.each do |line|
-    # if brd[line[0]] == PLAYER_MARKER &&
-    #    brd[line[1]] == PLAYER_MARKER &&
-    #    brd[line[2]] == PLAYER_MARKER
-    #   return 'Player'
-    # elsif brd[line[0]] == COMPUTER_MARKER &&
-    #       brd[line[1]] == COMPUTER_MARKER &&
-    #       brd[line[2]] == COMPUTER_MARKER
-    #   return 'Computer'
-    # end
-
     if brd.values_at(*line).count(PLAYER_MARKER) == 3
       return 'Player'
     elsif brd.values_at(*line).count(COMPUTER_MARKER) == 3
@@ -98,6 +88,11 @@ def detect_winner(brd)
   nil
 end
 
+def keep_score(score, winner)
+  score[winner.downcase.to_sym] += 1
+end
+
+score = {player: 0, computer: 0}
 loop do
   board = initialize_board
 
@@ -115,8 +110,19 @@ loop do
 
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"
+    keep_score(score, detect_winner(board))
   else
     prompt "It's a tie!"
+  end
+
+  prompt "Current score: Player: #{score[:player]} Computer: #{score[:computer]}"
+
+  if score[:player] == 5
+    prompt "You won the game!"
+    score = {player: 0, computer: 0}
+  elsif score[:computer] == 5
+    prompt "Computer won the game!"
+    score = {player: 0, computer: 0}
   end
 
   prompt "Play again? (y or n)"
