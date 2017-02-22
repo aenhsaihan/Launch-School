@@ -72,7 +72,7 @@ def find_at_risk_square(line, board, marker)
   end
 end
 
-def search_for_square(marker, board)
+def search_for_opening(marker, board)
   square = nil
   WINNING_LINES.each do |line|
     square = find_at_risk_square(line, board, marker)
@@ -82,9 +82,14 @@ def search_for_square(marker, board)
 end
 
 def computer_places_piece!(board)
-  square = search_for_square(COMPUTER_MARKER, board)
+  # offense
+  square = search_for_opening(COMPUTER_MARKER, board)
 
-  square = search_for_square(PLAYER_MARKER, board) if square == nil
+  # defense
+  square = search_for_opening(PLAYER_MARKER, board) if square == nil
+
+  # take 5 if open
+  square = empty_squares(board).select { |square| square == 5 }.first if empty_squares(board).include?(5)
 
   square = empty_squares(board).sample if square == nil
   board[square] = COMPUTER_MARKER
