@@ -4,6 +4,8 @@ INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 
+FIRST_PLAYER = 'computer'
+
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # columns
                 [[1, 5, 9], [3, 5, 7]]              # diagonals
@@ -114,6 +116,12 @@ def detect_winner(brd)
   nil
 end
 
+def determine_players(first_player)
+  second_player = 'player' if first_player == 'computer'
+  second_player = 'computer' if first_player == 'player'
+  players = { first: first_player, second: second_player}
+end
+
 def keep_score(score, winner)
   score[winner.downcase.to_sym] += 1
 end
@@ -122,14 +130,38 @@ score = {player: 0, computer: 0}
 loop do
   board = initialize_board
 
+  players = determine_players(FIRST_PLAYER)
+
+  if FIRST_PLAYER == 'choose'
+    loop do
+      prompt "Who goes first, player or computer?"
+      answer = gets.chomp
+      if answer.downcase == 'player' || answer == 'computer'
+        players = determine_players(answer.downcase)
+        break
+      end
+      prompt "Sorry, that's not a valid choice"
+    end
+  end
+
   loop do
     display_board(board)
 
-    player_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+    if players[:first] == 'player'
+      player_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
 
-    computer_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+      computer_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+    elsif players[:first] = 'computer'
+      computer_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+
+      display_board(board)
+
+      player_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+    end
   end
 
   display_board(board)
