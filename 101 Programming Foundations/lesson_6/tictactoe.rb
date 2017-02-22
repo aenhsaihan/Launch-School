@@ -130,12 +130,6 @@ def alternate_player(current_player)
   alternate_player
 end
 
-def determine_players(first_player)
-  second_player = 'player' if first_player == 'computer'
-  second_player = 'computer' if first_player == 'player'
-  players = { first: first_player, second: second_player}
-end
-
 def keep_score(score, winner)
   score[winner.downcase.to_sym] += 1
 end
