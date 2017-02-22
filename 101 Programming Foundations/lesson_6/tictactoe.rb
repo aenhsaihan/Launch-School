@@ -99,26 +99,9 @@ end
 
 def place_piece!(board, current_player)
   if current_player == 'player'
-    square = ''
-    loop do
-      prompt "Choose a square (#{joinor(empty_squares(board))}):"
-      square = gets.chomp.to_i
-      break if empty_squares(board).include?(square)
-      prompt "Sorry, that's not a valid choice"
-    end
-    board[square] = PLAYER_MARKER
+    player_places_piece!(board)
   elsif current_player == 'computer'
-    # offense
-    square = search_for_opening(COMPUTER_MARKER, board)
-
-    # defense
-    square = search_for_opening(PLAYER_MARKER, board) if square == nil
-
-    # take 5 if open
-    square = empty_squares(board).select { |square| square == 5 }.first if empty_squares(board).include?(5)
-
-    square = empty_squares(board).sample if square == nil
-    board[square] = COMPUTER_MARKER
+    computer_places_piece!(board)
   end
 end
 
