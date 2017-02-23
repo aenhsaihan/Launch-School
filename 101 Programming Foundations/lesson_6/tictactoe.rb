@@ -68,7 +68,7 @@ end
 
 def find_at_risk_square(line, board, marker)
   if board.values_at(*line).count(marker) == 2
-    board.select { |k,v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+    board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   else
     nil
   end
@@ -130,11 +130,15 @@ def alternate_player(current_player)
   alternate_player
 end
 
-def keep_score(score, winner)
-  score[winner.downcase.to_sym] += 1
+def keep_score(scores, winner)
+  scores[winner.downcase.to_sym] += 1
 end
 
-score = {player: 0, computer: 0}
+def initial_scores
+  { player: 0, computer: 0 }
+end
+
+scores = initial_scores
 loop do
   board = initialize_board
 
@@ -163,19 +167,19 @@ loop do
 
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"
-    keep_score(score, detect_winner(board))
+    keep_score(scores, detect_winner(board))
   else
     prompt "It's a tie!"
   end
 
-  prompt "Current score: Player: #{score[:player]} Computer: #{score[:computer]}"
+  prompt "Current score: Player: #{scores[:player]} Computer: #{scores[:computer]}"
 
-  if score[:player] == 5
+  if scores[:player] == 5
     prompt "You won the game!"
-    score = {player: 0, computer: 0}
-  elsif score[:computer] == 5
+    scores = initial_scores
+  elsif scores[:computer] == 5
     prompt "Computer won the game!"
-    score = {player: 0, computer: 0}
+    scores = initial_scores
   end
 
   prompt "Play again? (y or n)"
