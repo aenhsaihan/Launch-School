@@ -70,7 +70,7 @@ def find_at_risk_square(line, board, marker)
   if board.values_at(*line).count(marker) == 2
     board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   else
-    nil
+    return nil
   end
 end
 
@@ -88,12 +88,12 @@ def computer_places_piece!(board)
   square = search_for_opening(COMPUTER_MARKER, board)
 
   # defense
-  square = search_for_opening(PLAYER_MARKER, board) if square == nil
+  square = search_for_opening(PLAYER_MARKER, board) if square.nil?
 
   # take 5 if open
   square = 5 if empty_squares(board).include?(5)
 
-  square = empty_squares(board).sample if square == nil
+  square = empty_squares(board).sample if square.nil?
   board[square] = COMPUTER_MARKER
 end
 
