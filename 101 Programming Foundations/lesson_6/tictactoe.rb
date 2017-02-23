@@ -96,9 +96,9 @@ def computer_places_piece!(board)
 end
 
 def place_piece!(board, current_player)
-  if current_player == 'player'
+  if current_player == :player
     player_places_piece!(board)
-  elsif current_player == 'computer'
+  elsif current_player == :computer
     computer_places_piece!(board)
   end
 end
@@ -123,8 +123,8 @@ def detect_winner(brd)
 end
 
 def alternate_player(current_player)
-  alternate_player = 'player' if current_player == 'computer'
-  alternate_player = 'computer' if current_player == 'player'
+  alternate_player = :player if current_player == :computer
+  alternate_player = :computer if current_player == :player
   alternate_player
 end
 
@@ -140,14 +140,14 @@ scores = initial_scores
 loop do
   board = initialize_board
 
-  current_player = FIRST_PLAYER
+  current_player = FIRST_PLAYER.to_sym
 
-  if FIRST_PLAYER == 'choose'
+  if current_player == :choose
     loop do
       prompt "Who goes first, player or computer?"
       answer = gets.chomp.downcase
       if answer == 'player' || answer == 'computer'
-        current_player = answer
+        current_player = answer.to_sym
         break
       end
       prompt "Sorry, that's not a valid choice"
