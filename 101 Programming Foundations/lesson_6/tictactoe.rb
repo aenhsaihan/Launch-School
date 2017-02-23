@@ -91,7 +91,7 @@ def computer_places_piece!(board)
   square = search_for_opening(PLAYER_MARKER, board) if square == nil
 
   # take 5 if open
-  square = empty_squares(board).select { |square| square == 5 }.first if empty_squares(board).include?(5)
+  square = 5 if empty_squares(board).include?(5)
 
   square = empty_squares(board).sample if square == nil
   board[square] = COMPUTER_MARKER
