@@ -9,3 +9,12 @@ suits.each do |suit|
     deck << ["#{suit}", "#{card}"]
   end
 end
+
+def calculate_ace(hand)
+  total = 0
+  hand.each do |card|
+    total += card.last.to_i
+  end
+
+  total < 15 ? 11 : 1
+end
