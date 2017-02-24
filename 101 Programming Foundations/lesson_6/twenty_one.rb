@@ -40,14 +40,17 @@ def busted?(cards)
 end
 
 def decide_winner(player_cards, dealer_cards)
+  player_total = total(player_cards)
+  dealer_total = total(dealer_cards)
+
   # determine who won between the player and the dealer
-  if busted?(player_cards)
+  if player_total > 21
     'dealer'
-  elsif busted?(dealer_cards)
+  elsif dealer_total > 21
     'player'
-  elsif total(player_cards) > total(dealer_cards)
+  elsif dealer_total < player_total
     'player'
-  elsif total(dealer_cards) > total(player_cards)
+  elsif player_total < dealer_total
     'dealer'
   else
     'dealer'
