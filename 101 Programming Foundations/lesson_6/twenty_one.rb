@@ -120,7 +120,7 @@ loop do
     end
     break if answer == 'stay' || busted?(player_cards)
 
-    if answer.downcase == 'hit'
+    if answer.casecmp('hit') == 0 # I really don't like this over downcase
       player_cards << deal_card(deck)
     else
       prompt "Sorry, didn't recognize that command"
