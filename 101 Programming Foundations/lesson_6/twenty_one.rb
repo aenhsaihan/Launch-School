@@ -112,14 +112,19 @@ loop do
   loop do
     inform_player(player_cards, dealer_cards)
 
-    if !busted?(player_cards)
+    if busted?(player_cards)
+      answer = 'stay'
+    else
       prompt 'hit or stay?'
       answer = gets.chomp.downcase
-    else
-      answer = 'stay'
     end
     break if answer == 'stay' || busted?(player_cards)
-    player_cards << deal_card(deck)
+
+    if answer.downcase == 'hit'
+      player_cards << deal_card(deck)
+    else
+      prompt "Sorry, didn't recognize that command"
+    end
   end
 
   if busted?(player_cards)
