@@ -170,6 +170,12 @@ loop do
     prompt "Dealer stayed at #{total(dealer_cards)}!"
   end
 
+  # both player and dealer stays - compare cards!
+  puts "=============="
+  prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
+  prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
+  puts "=============="
+
   display_winner(player_cards, dealer_cards)
 
   break unless play_again?
