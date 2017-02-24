@@ -6,7 +6,7 @@ suits = ['H', 'C', 'D', 'S']
 deck = []
 suits.each do |suit|
   cards.each do |card|
-    deck << ["#{suit}", "#{card}"]
+    deck << [suit, card.to_s]
   end
 end
 
@@ -78,8 +78,8 @@ def return_cards(player_cards, dealer_cards, deck)
 end
 
 def deal_cards(player_cards, dealer_cards, deck)
-  2.times { player_cards << deal_card(deck)}
-  2.times { dealer_cards << deal_card(deck)}
+  2.times { player_cards << deal_card(deck) }
+  2.times { dealer_cards << deal_card(deck) }
 end
 
 def dealer_decision(dealer_cards)
@@ -90,10 +90,10 @@ def verbalize(cards)
   cards = cards.map { |card| card.last }
 
   case cards.size
-    when 2 then "#{cards.first} and #{cards.last}"
-    else
-      cards[-1] = "and #{cards.last}"
-      cards.join(', ')
+  when 2 then "#{cards.first} and #{cards.last}"
+  else
+    cards[-1] = "and #{cards.last}"
+    cards.join(', ')
   end
 end
 
@@ -103,7 +103,6 @@ def inform_player(player_cards, dealer_cards)
 
   prompt "You have #{verbalize(player_cards)}"
 end
-
 
 loop do
   player_cards = []
