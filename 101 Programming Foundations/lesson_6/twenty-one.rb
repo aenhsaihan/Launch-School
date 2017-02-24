@@ -53,9 +53,23 @@ def display_winner(player_cards, dealer_cards)
   prompt "The winner is #{winner}"
 end
 
+def deal_card(deck)
+  deck.delete(deck.sample)
+end
+
+def return_cards(player_cards, dealer_cards, deck)
+  until player_cards.empty?
+    deck << player_cards.pop
+  end
+
+  until dealer_cards.empty?
+    deck << dealer_cards.pop
+  end
+end
+
 def deal_cards(player_cards, dealer_cards, deck)
-  2.times { player_cards << deck.delete(deck.sample)}
-  2.times { dealer_cards << deck.delete(deck.sample)}
+  2.times { player_cards << deal_card(deck)}
+  2.times { dealer_cards << deal_card(deck)}
 end
 
 def dealer_decision(dealer_cards)
@@ -94,7 +108,7 @@ loop do
   loop do
     break if answer == 'stay' || busted?(dealer_cards)
     answer = dealer_decision(dealer_cards)
-    dealer_cards << deck.delete(deck.sample) unless answer == 'stay'
+    dealer_cards << deal_card(deck) unless answer == 'stay'
   end
 
   if busted?(dealer_cards)
@@ -109,8 +123,7 @@ loop do
   answer = gets.chomp.downcase
   break unless answer == 'y'
 
-  player_cards = []
-  dealer_cards = []
+  return_cards(player_cards, dealer_cards, deck)
 end
 
 prompt "Goodbye, and thanks for playing!"
