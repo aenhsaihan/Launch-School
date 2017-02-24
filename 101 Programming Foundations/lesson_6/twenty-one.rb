@@ -50,7 +50,7 @@ def decide_winner(player_cards, dealer_cards)
   elsif busted?(dealer_cards)
     'player'
   elsif total(player_cards) > total(dealer_cards)
-    'Player'
+    'player'
   elsif total(dealer_cards) > total(player_cards)
     'dealer'
   end
@@ -84,11 +84,22 @@ def dealer_decision(dealer_cards)
   total(dealer_cards) < 17 ? 'hit' : 'stay'
 end
 
+def verbalize(cards)
+  cards = cards.map { |card| card.last }
+
+  case cards.size
+    when 2 then "#{cards.first} and #{cards.last}"
+    else
+      cards[-1] = "and #{cards.last}"
+      cards.join(', ')
+  end
+end
+
 def inform_player(player_cards, dealer_cards)
   known_card = dealer_cards.first
-  prompt "Dealer has #{known_card} and an unknown card"
+  prompt "Dealer has #{known_card.last} and an unknown card"
 
-  prompt "You have #{player_cards}"
+  prompt "You have #{verbalize(player_cards)}"
 end
 
 
