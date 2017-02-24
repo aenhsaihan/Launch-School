@@ -45,21 +45,33 @@ def decide_winner(player_cards, dealer_cards)
 
   # determine who won between the player and the dealer
   if player_total > 21
-    'dealer'
+    :player_busted
   elsif dealer_total > 21
-    'player'
+    :dealer_busted
   elsif dealer_total < player_total
-    'player'
+    :player
   elsif player_total < dealer_total
-    'dealer'
+    :dealer
   else
-    'dealer'
+    :tie
   end
 end
 
 def display_winner(player_cards, dealer_cards)
-  winner = decide_winner(player_cards, dealer_cards)
-  prompt "The winner is #{winner}"
+  result = decide_winner(player_cards, dealer_cards)
+
+  case result
+  when :player_busted
+    prompt "You busted, dealer wins!"
+  when :dealer_busted
+    prompt "Dealer busted, you won!"
+  when :player
+    prompt "You win!"
+  when :dealer
+    prompt "Dealer wins!"
+  when :tie
+    prompt "It's a tie, dealer wins!"
+  end
 end
 
 def deal_card(deck)
@@ -77,8 +89,10 @@ def return_cards(player_cards, dealer_cards, deck)
 end
 
 def deal_cards(player_cards, dealer_cards, deck)
-  2.times { player_cards << deal_card(deck) }
-  2.times { dealer_cards << deal_card(deck) }
+  2.times do
+    player_cards << deal_card(deck)
+    dealer_cards << deal_card(deck)
+  end
 end
 
 def dealer_decision(dealer_cards)
@@ -101,6 +115,13 @@ def inform_player(player_cards, dealer_cards)
   prompt "Dealer has #{known_card.last} and an unknown card"
 
   prompt "You have #{verbalize(player_cards)}"
+end
+
+def play_again?
+  puts '---------------'
+  prompt 'Do you want to play again? (y or n)'
+  answer = gets.chomp
+  answer.downcase.start_with?('y')
 end
 
 loop do
@@ -127,9 +148,10 @@ loop do
   end
 
   if busted?(player_cards)
-    prompt 'You busted!'
+    display_winner(player_cards, dealer_cards)
+    play_again? ? next : break
   else
-    prompt 'You stayed!'
+    prompt "You stayed at #{total(player_cards)}!"
   end
 
   # onto the dealer
@@ -141,16 +163,16 @@ loop do
   end
 
   if busted?(dealer_cards)
-    prompt 'Dealer busted!'
+    prompt "Dealer total is at #{total(dealer_cards)}!"
+    display_winner(player_cards, dealer_cards)
+    play_again? ? next : break
   else
-    prompt 'Dealer stayed!'
+    prompt "Dealer stayed at #{total(dealer_cards)}!"
   end
 
   display_winner(player_cards, dealer_cards)
 
-  prompt "Would you like to play again? (y or n)"
-  answer = gets.chomp.downcase
-  break unless answer == 'y'
+  break unless play_again?
 
   return_cards(player_cards, dealer_cards, deck)
 end
