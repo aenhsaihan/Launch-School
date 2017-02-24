@@ -48,3 +48,16 @@ else
 end
 
 # onto the dealer
+answer = ''
+loop do
+  break if answer == 'stay' || busted?
+  # answer = dealer_decision method invoked here
+end
+
+if busted?
+  puts 'Dealer busted!'
+else
+  puts 'Dealer stayed!'
+end
+
+
