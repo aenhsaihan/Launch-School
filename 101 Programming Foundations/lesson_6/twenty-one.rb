@@ -10,6 +10,10 @@ suits.each do |suit|
   end
 end
 
+def prompt(message)
+  puts "=> #{message}"
+end
+
 def total(cards)
   values = cards.map { |card| card.last }
 
@@ -39,12 +43,14 @@ def busted?(cards)
   end
 end
 
-def decide_winner
+def decide_winner(player_cards, dealer_cards)
   # determine who won between the player and the dealer
+
 end
 
-def display_winner
-  puts "The winner is #{decide_winner}"
+def display_winner(player_cards, dealer_cards)
+  winner = decide_winner(player_cards, dealer_cards)
+  prompt "The winner is #{winner}"
 end
 
 def deal_cards(player_cards, dealer_cards, deck)
@@ -58,40 +64,53 @@ end
 
 def inform_player(player_cards, dealer_cards)
   known_card = dealer_cards.first
-  puts "Dealer has #{known_card} and an unknown card"
+  prompt "Dealer has #{known_card} and an unknown card"
 
-  puts "You have #{player_cards}"
+  prompt "You have #{player_cards}"
 end
 
-player_cards = []
-dealer_cards = []
-deal_cards(player_cards, dealer_cards, deck)
 
 loop do
-  inform_player(player_cards, dealer_cards)
-  puts 'hit or stay?'
+  player_cards = []
+  dealer_cards = []
+  deal_cards(player_cards, dealer_cards, deck)
+
+  loop do
+    inform_player(player_cards, dealer_cards)
+    prompt 'hit or stay?'
+    answer = gets.chomp.downcase
+    break if answer == 'stay' || busted?(player_cards)
+    player_cards << deck.delete(deck.sample)
+  end
+
+  if busted?(player_cards)
+    prompt 'You busted!'
+  else
+    prompt 'You stayed!'
+  end
+
+  # onto the dealer
+  answer = ''
+  loop do
+    break if answer == 'stay' || busted?(dealer_cards)
+    answer = dealer_decision(dealer_cards)
+    dealer_cards << deck.delete(deck.sample) unless answer == 'stay'
+  end
+
+  if busted?(dealer_cards)
+    prompt 'Dealer busted!'
+  else
+    prompt 'Dealer stayed!'
+  end
+
+  display_winner(player_cards, dealer_cards)
+
+  prompt "Would you like to play again? (y or n)"
   answer = gets.chomp.downcase
-  break if answer == 'stay' || busted?(player_cards)
-  player_cards << deck.delete(deck.sample)
+  break unless answer == 'y'
+
+  player_cards = []
+  dealer_cards = []
 end
 
-if busted?(player_cards)
-  puts 'You busted!'
-else
-  puts 'You stayed!'
-end
-
-# onto the dealer
-answer = ''
-loop do
-  break if answer == 'stay' || busted?(dealer_cards)
-  answer = dealer_decision(dealer_cards)
-end
-
-if busted?(dealer_cards)
-  puts 'Dealer busted!'
-else
-  puts 'Dealer stayed!'
-end
-
-display_winner
+prompt "Goodbye, and thanks for playing!"
