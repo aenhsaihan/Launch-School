@@ -1,4 +1,4 @@
-numbered_cards = (1..10).to_a
+numbered_cards = (2..10).to_a
 face_cards = ['J', 'Q', 'K', 'A']
 cards = numbered_cards + face_cards
 suits = ['H', 'C', 'D', 'S']
@@ -45,7 +45,15 @@ end
 
 def decide_winner(player_cards, dealer_cards)
   # determine who won between the player and the dealer
-
+  if busted?(player_cards)
+    'dealer'
+  elsif busted?(dealer_cards)
+    'player'
+  elsif total(player_cards) > total(dealer_cards)
+    'Player'
+  elsif total(dealer_cards) > total(player_cards)
+    'dealer'
+  end
 end
 
 def display_winner(player_cards, dealer_cards)
@@ -94,7 +102,7 @@ loop do
     prompt 'hit or stay?'
     answer = gets.chomp.downcase
     break if answer == 'stay' || busted?(player_cards)
-    player_cards << deck.delete(deck.sample)
+    player_cards << deal_card(deck)
   end
 
   if busted?(player_cards)
@@ -106,7 +114,7 @@ loop do
   # onto the dealer
   answer = ''
   loop do
-    break if answer == 'stay' || busted?(dealer_cards)
+    break if answer == 'stay' || busted?(dealer_cards) || busted?(player_cards)
     answer = dealer_decision(dealer_cards)
     dealer_cards << deal_card(deck) unless answer == 'stay'
   end
