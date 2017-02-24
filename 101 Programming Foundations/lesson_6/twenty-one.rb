@@ -30,3 +30,21 @@ def total(cards)
 
   sum
 end
+
+def busted?
+  false
+end
+
+loop do
+  puts 'hit or stay?'
+  answer = gets.chomp.downcase
+  break if answer == 'stay' || busted?
+end
+
+if busted?
+  puts 'You busted!'
+else
+  puts 'You stayed!'
+end
+
+# onto the dealer
