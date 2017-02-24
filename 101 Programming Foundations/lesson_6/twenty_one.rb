@@ -36,11 +36,7 @@ def total(cards)
 end
 
 def busted?(cards)
-  if total(cards) > 21
-    true
-  else
-    false
-  end
+  total(cards) > 21
 end
 
 def decide_winner(player_cards, dealer_cards)
