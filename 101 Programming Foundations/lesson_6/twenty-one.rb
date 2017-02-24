@@ -53,6 +53,8 @@ def decide_winner(player_cards, dealer_cards)
     'player'
   elsif total(dealer_cards) > total(player_cards)
     'dealer'
+  else
+    'dealer'
   end
 end
 
@@ -110,8 +112,13 @@ loop do
 
   loop do
     inform_player(player_cards, dealer_cards)
-    prompt 'hit or stay?'
-    answer = gets.chomp.downcase
+
+    if !busted?(player_cards)
+      prompt 'hit or stay?'
+      answer = gets.chomp.downcase
+    else
+      answer = 'stay'
+    end
     break if answer == 'stay' || busted?(player_cards)
     player_cards << deal_card(deck)
   end
