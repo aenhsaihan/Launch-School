@@ -142,11 +142,12 @@ loop do
     end
   end
 
+  player_total = total(player_cards)
   if busted?(player_cards)
     display_winner(player_cards, dealer_cards)
     play_again? ? next : break
   else
-    prompt "You stayed at #{total(player_cards)}!"
+    prompt "You stayed at #{player_total}!"
   end
 
   # onto the dealer
@@ -157,18 +158,19 @@ loop do
     dealer_cards << deal_card(deck) unless answer == 'stay'
   end
 
+  dealer_total = total(dealer_cards)
   if busted?(dealer_cards)
-    prompt "Dealer total is at #{total(dealer_cards)}!"
+    prompt "Dealer total is at #{dealer_total}!"
     display_winner(player_cards, dealer_cards)
     play_again? ? next : break
   else
-    prompt "Dealer stayed at #{total(dealer_cards)}!"
+    prompt "Dealer stayed at #{dealer_total}!"
   end
 
   # both player and dealer stays - compare cards!
   puts "=============="
-  prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
-  prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
+  prompt "Dealer has #{dealer_cards}, for a total of: #{dealer_total}"
+  prompt "Player has #{player_cards}, for a total of: #{player_total}"
   puts "=============="
 
   display_winner(player_cards, dealer_cards)
