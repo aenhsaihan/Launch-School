@@ -10,7 +10,7 @@ def prompt(message)
 end
 
 def total(cards)
-  values = cards.map { |card| card.last }
+  values = cards.map(&:last)
 
   sum = 0
   values.each do |value|
@@ -95,7 +95,7 @@ def dealer_decision(dealer_cards)
 end
 
 def verbalize(cards)
-  cards = cards.map { |card| card.last }
+  cards = cards.map(&:last)
 
   case cards.size
   when 2 then "#{cards.first} and #{cards.last}"
