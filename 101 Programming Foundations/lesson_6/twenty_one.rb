@@ -3,12 +3,7 @@ face_cards = ['J', 'Q', 'K', 'A']
 cards = numbered_cards + face_cards
 suits = ['H', 'C', 'D', 'S']
 
-deck = []
-suits.each do |suit|
-  cards.each do |card|
-    deck << [suit, card.to_s]
-  end
-end
+deck = suits.product(cards.map(&:to_s))
 
 def prompt(message)
   puts "=> #{message}"
