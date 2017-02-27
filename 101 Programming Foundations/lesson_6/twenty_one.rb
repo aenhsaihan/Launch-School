@@ -119,6 +119,16 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
+def grand_output(player_cards, dealer_cards)
+  # both player and dealer stays - compare cards!
+  puts "=============="
+  prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
+  prompt "Player has #{player_cards}, for a total of: #{total(dealer_cards)}"
+  puts "=============="
+
+  display_winner(player_cards, dealer_cards)
+end
+
 loop do
   player_cards = []
   dealer_cards = []
@@ -167,13 +177,7 @@ loop do
     prompt "Dealer stayed at #{dealer_total}!"
   end
 
-  # both player and dealer stays - compare cards!
-  puts "=============="
-  prompt "Dealer has #{dealer_cards}, for a total of: #{dealer_total}"
-  prompt "Player has #{player_cards}, for a total of: #{player_total}"
-  puts "=============="
-
-  display_winner(player_cards, dealer_cards)
+  grand_output(player_cards, dealer_cards)
 
   break unless play_again?
 
