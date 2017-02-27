@@ -15,11 +15,11 @@ def total(cards)
   sum = 0
   values.each do |value|
     sum += if value == 'A'
-            11
+             11
            elsif value.to_i == 0 # J, Q, K
-            10
+             10
            else
-            value.to_i
+             value.to_i
            end
   end
 
