@@ -55,6 +55,8 @@ end
 def display_winner(player_cards, dealer_cards)
   result = decide_winner(player_cards, dealer_cards)
 
+  puts '---------------'
+
   case result
   when :player_busted
     prompt "You busted, dealer wins!"
@@ -120,13 +122,12 @@ def play_again?
 end
 
 def grand_output(player_cards, dealer_cards)
+  display_winner(player_cards, dealer_cards)
   # both player and dealer stays - compare cards!
   puts "=============="
   prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
   prompt "Player has #{player_cards}, for a total of: #{total(dealer_cards)}"
   puts "=============="
-
-  display_winner(player_cards, dealer_cards)
 end
 
 loop do
@@ -154,7 +155,7 @@ loop do
 
   player_total = total(player_cards)
   if busted?(player_cards)
-    display_winner(player_cards, dealer_cards)
+    grand_output(player_cards, dealer_cards)
     play_again? ? next : break
   else
     prompt "You stayed at #{player_total}!"
@@ -171,7 +172,7 @@ loop do
   dealer_total = total(dealer_cards)
   if busted?(dealer_cards)
     prompt "Dealer total is at #{dealer_total}!"
-    display_winner(player_cards, dealer_cards)
+    grand_output(player_cards, dealer_cards)
     play_again? ? next : break
   else
     prompt "Dealer stayed at #{dealer_total}!"
