@@ -29,8 +29,8 @@ def total(cards)
   end
 
   # adjust total for aces in hand
-  aces = values.select { |value| value == 'A' }
-  aces.count.times { sum -= 10 if sum > 21 }
+  aces = values.count { |value| value == 'A' }
+  aces.times { sum -= 10 if sum > 21 }
 
   sum
 end
