@@ -1,3 +1,5 @@
+BLACKJACK = 35
+
 numbered_cards = (2..10).to_a
 face_cards = ['J', 'Q', 'K', 'A']
 cards = numbered_cards + face_cards
@@ -25,13 +27,13 @@ def total(cards)
 
   # adjust total for aces in hand
   aces = values.count { |value| value == 'A' }
-  aces.times { sum -= 10 if sum > 21 }
+  aces.times { sum -= 10 if sum > BLACKJACK }
 
   sum
 end
 
 def busted?(cards)
-  total(cards) > 21
+  total(cards) > BLACKJACK
 end
 
 def decide_winner(player_cards, dealer_cards)
@@ -39,9 +41,9 @@ def decide_winner(player_cards, dealer_cards)
   dealer_total = total(dealer_cards)
 
   # determine who won between the player and the dealer
-  if player_total > 21
+  if player_total > BLACKJACK
     :player_busted
-  elsif dealer_total > 21
+  elsif dealer_total > BLACKJACK
     :dealer_busted
   elsif dealer_total < player_total
     :player
@@ -93,7 +95,7 @@ def deal_cards(player_cards, dealer_cards, deck)
 end
 
 def dealer_decision(dealer_cards)
-  total(dealer_cards) < 17 ? 'hit' : 'stay'
+  total(dealer_cards) < (BLACKJACK - 4) ? 'hit' : 'stay'
 end
 
 def verbalize(cards)
@@ -140,7 +142,7 @@ def grand_output(player_cards, dealer_cards, scores)
   # both player and dealer stays - compare cards!
   puts "=============="
   prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
-  prompt "Player has #{player_cards}, for a total of: #{total(dealer_cards)}"
+  prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
   puts "=============="
 
   declare_winner(scores)
