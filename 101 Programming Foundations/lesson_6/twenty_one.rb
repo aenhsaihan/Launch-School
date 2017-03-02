@@ -121,15 +121,33 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
-def grand_output(player_cards, dealer_cards)
+def grand_output(player_cards, dealer_cards, scores)
   display_winner(player_cards, dealer_cards)
   # both player and dealer stays - compare cards!
   puts "=============="
   prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
   prompt "Player has #{player_cards}, for a total of: #{total(dealer_cards)}"
   puts "=============="
+
+  puts "Current score: Player: #{scores[:player]} Dealer: #{scores[:dealer]}"
 end
 
+def initial_scores
+  { player: 0, dealer: 0 }
+end
+
+def keep_score(scores, result)
+  case result
+  when :dealer, :player_busted, :tie
+    scores[:dealer] += 1
+  when :player, :dealer_busted
+    scores[:player] += 1
+  end
+
+  scores
+end
+
+scores = initial_scores
 loop do
   player_cards = []
   dealer_cards = []
@@ -155,7 +173,8 @@ loop do
 
   player_total = total(player_cards)
   if busted?(player_cards)
-    grand_output(player_cards, dealer_cards)
+    keep_score(scores, decide_winner(player_cards, dealer_cards))
+    grand_output(player_cards, dealer_cards, scores)
     play_again? ? next : break
   else
     prompt "You stayed at #{player_total}!"
@@ -172,13 +191,15 @@ loop do
   dealer_total = total(dealer_cards)
   if busted?(dealer_cards)
     prompt "Dealer total is at #{dealer_total}!"
-    grand_output(player_cards, dealer_cards)
+    keep_score(scores, decide_winner(player_cards, dealer_cards))
+    grand_output(player_cards, dealer_cards, scores)
     play_again? ? next : break
   else
     prompt "Dealer stayed at #{dealer_total}!"
   end
 
-  grand_output(player_cards, dealer_cards)
+  keep_score(scores, decide_winner(player_cards, dealer_cards))
+  grand_output(player_cards, dealer_cards, scores)
 
   break unless play_again?
 
