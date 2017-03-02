@@ -121,6 +121,20 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
+def declare_winner(scores)
+  if scores[:player] == 5
+    puts "You have won the game!"
+    scores[:player] = 0
+    scores[:dealer] = 0
+  elsif scores[:dealer] == 5
+    puts "Dealer has won the game!"
+    scores[:player] = 0
+    scores[:dealer] = 0
+  else
+    puts "Current score: Player: #{scores[:player]} Dealer: #{scores[:dealer]}"
+  end
+end
+
 def grand_output(player_cards, dealer_cards, scores)
   display_winner(player_cards, dealer_cards)
   # both player and dealer stays - compare cards!
@@ -129,7 +143,7 @@ def grand_output(player_cards, dealer_cards, scores)
   prompt "Player has #{player_cards}, for a total of: #{total(dealer_cards)}"
   puts "=============="
 
-  puts "Current score: Player: #{scores[:player]} Dealer: #{scores[:dealer]}"
+  declare_winner(scores)
 end
 
 def initial_scores
