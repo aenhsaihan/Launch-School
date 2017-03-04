@@ -126,7 +126,7 @@ end
 def who_won_game(scores)
   if scores[:player] == 5
     :player
-  elsif[:dealer] == 5
+  elsif scores[:dealer] == 5
     :dealer
   end
 end
@@ -150,6 +150,10 @@ def grand_output(player_cards, dealer_cards, scores)
   declare_winner(scores)
 end
 
+def reset_scores?(scores)
+  who_won_game(scores)
+end
+
 def initial_scores
   { player: 0, dealer: 0 }
 end
@@ -168,6 +172,7 @@ loop do
   player_cards = []
   dealer_cards = []
   deal_cards(player_cards, dealer_cards, deck)
+  scores = initial_scores if reset_scores?(scores)
 
   loop do
     inform_player(player_cards, dealer_cards)
