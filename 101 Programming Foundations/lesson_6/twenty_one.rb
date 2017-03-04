@@ -1,4 +1,4 @@
-BLACKJACK = 35
+BLACKJACK = 21
 
 numbered_cards = (2..10).to_a
 face_cards = ['J', 'Q', 'K', 'A']
@@ -123,17 +123,19 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
-def declare_winner(scores)
+def who_won_game(scores)
   if scores[:player] == 5
-    puts "You have won the game!"
-    scores[:player] = 0
-    scores[:dealer] = 0
-  elsif scores[:dealer] == 5
-    puts "Dealer has won the game!"
-    scores[:player] = 0
-    scores[:dealer] = 0
-  else
-    puts "Current score: Player: #{scores[:player]} Dealer: #{scores[:dealer]}"
+    :player
+  elsif[:dealer] == 5
+    :dealer
+  end
+end
+
+def declare_winner(scores)
+  case result = who_won_game(scores)
+  when :player then puts "You have won the game!"
+  when :dealer then puts "Dealer has won the game!"
+  else puts "Current score: Player: #{scores[:player]} Dealer: #{scores[:dealer]}"
   end
 end
 
@@ -159,8 +161,6 @@ def keep_score(scores, result)
   when :player, :dealer_busted
     scores[:player] += 1
   end
-
-  scores
 end
 
 scores = initial_scores
@@ -172,13 +172,11 @@ loop do
   loop do
     inform_player(player_cards, dealer_cards)
 
-    if busted?(player_cards)
-      answer = 'stay'
-    else
+    unless busted?(player_cards)
       prompt 'hit or stay?'
       answer = gets.chomp.downcase
     end
-    break if answer == 'stay' || busted?(player_cards)
+    break if answer == 'stay' || answer.nil?
 
     if answer.casecmp('hit') == 0 # I really don't like this over downcase
       player_cards << deal_card(deck)
