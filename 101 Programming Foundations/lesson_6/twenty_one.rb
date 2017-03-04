@@ -132,10 +132,13 @@ def who_won_game(scores)
 end
 
 def declare_winner(scores)
-  case result = who_won_game(scores)
+  case who_won_game(scores)
   when :player then puts "You have won the game!"
   when :dealer then puts "Dealer has won the game!"
-  else puts "Current score: Player: #{scores[:player]} Dealer: #{scores[:dealer]}"
+  else
+    player_score = scores[:player]
+    dealer_score = scores[:dealer]
+    puts "Current score: Player: #{player_score} Dealer: #{dealer_score}"
   end
 end
 
